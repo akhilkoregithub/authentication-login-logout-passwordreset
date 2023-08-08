@@ -7,7 +7,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id', 'firstname', 'lastname']
         
-class UserProfileSerializer(serializer.ModelSerializer):
+
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = '__all__'

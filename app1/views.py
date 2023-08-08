@@ -9,13 +9,14 @@ from django.urls import reverse, reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.views import (PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, 
-                                     PasswordResetCompleteView)
+from django.contrib.auth.views import (PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView,
+                                       PasswordResetCompleteView)
 
 
 @login_required(login_url='login')
 def HomePage(request):
     return render(request, 'home.html')
+
 
 def SignupPage(request):
     if request.method == "POST":
@@ -28,6 +29,7 @@ def SignupPage(request):
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
+
 
 @csrf_exempt
 def LoginPage(request):
@@ -51,20 +53,23 @@ def LogoutPage(request):
     logout(request)
     return redirect('login')
 
+
 class CustomPasswordResetView(PasswordResetView):
     form_class = PasswordResetForm
     template_name = 'password_reset_form.html'
     email_template_name = 'password_reset_email.html'
     success_url = reverse_lazy('password_reset_done')
 
+
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'password_reset_done.html'
+
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = SetPasswordForm
     template_name = 'password_reset_confirm.html'
-    success_url = reverse('password_reset_complete')
+    success_url = reverse_lazy('password_reset_complete')
+
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'password_reset_complete.html'
-
